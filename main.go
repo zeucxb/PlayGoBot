@@ -1,33 +1,34 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"strings"
+	"os"
 	"time"
 
 	"github.com/sclevine/agouti"
 )
 
 func main() {
-	var digited, imports string
-
-	fmt.Println("What you want to import?")
-	fmt.Scan(&imports)
+	var line, digited string
+	scanner := bufio.NewScanner(os.Stdin)
 
 	fmt.Println("Show me the code :)")
-	fmt.Scan(&digited)
+	for {
+		scanner.Scan()
 
-	ims := strings.Split(imports, ",")
+		line = scanner.Text()
 
-	imports = "import("
+		if line == ":end" {
+			break
+		}
 
-	for i := range ims {
-		imports += fmt.Sprintf("\"%s\"\n", ims[i])
+		digited += fmt.Sprintf("%s\n", line)
 	}
 
-	imports += ")"
+	fmt.Println("========== PROGRAM ==========")
 
-	digited = fmt.Sprintf("package main\n%s\nfunc main() { %s }", imports, digited)
+	fmt.Println(digited)
 
 	fmt.Println("========== RESPONSE ==========")
 
@@ -57,21 +58,14 @@ func main() {
 
 	time.Sleep(1000 * time.Millisecond)
 
-	loginPrompt, err := page.Find("#output").Text()
+	output, err := page.Find("#output").Text()
 	if err != nil {
 		fmt.Println("Failed to get login prompt text:", err)
 	}
 
-	fmt.Println(loginPrompt)
+	fmt.Println(output)
 
-	// loginPrompt, err = page.Find("#code").Text()
-	// if err != nil {
-	// 	fmt.Println("Failed to get login prompt text:", err)
-	// }
-
-	// fmt.Println("code:", loginPrompt)
-
-	// if err := driver.Stop(); err != nil {
-	// 	fmt.Println("Failed to close pages and stop WebDriver:", err)
-	// }
+	if err := driver.Stop(); err != nil {
+		fmt.Println("Failed to close pages and stop WebDriver:", err)
+	}
 }
