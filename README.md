@@ -4,12 +4,26 @@ A simple Golang Bot Test
 # Usage
 ```bash
 $ go run main.go
-What you want to import?
-fmt,time
 Show me the code :)
-fmt.Println(time.Millisecond)
+package main
+import (
+"fmt"
+)
+func main() {
+fmt.Println("Hello Go")
+}
+:end
+========== PROGRAM ==========
+package main
+import (
+"fmt"
+)
+func main() {
+fmt.Println("Hello Go")
+}
+
 ========== RESPONSE ==========
-1ms
+Hello Go
 
 Program exited.
 ```
